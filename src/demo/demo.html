@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi" />
+<title>jquery.imageMapWeaver demo</title>
+<style type="text/css">
+body > div#test { width: 300px; }
+body img { width: 100%; }
+</style>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="../jquery.imageMapWeaver.js"></script>
+<script>
+$(function() {
+	$("map").imageMapWeaver();
+});
+</script>
+</head>
+
+<body>
+	<div>
+		<img src="images/ios6_image_01.png" usemap="ios6-01" />
+		<map name="ios6-01">
+			<area shape="rect" coords="33,333,251,371" href="" />
+			<area shape="rect" coords="35,374,251,406" href="" />
+			<area shape="rect" coords="36,409,251,442" href="" />
+			<area shape="circle" coords="129,232,60" href="" />
+		</map>
+
+		<img src="images/ios6_image_02.png" usemap="ios6-02" />
+		<map name="ios6-02">
+			<area shape="poly" coords="31,93,120,91,138,103,162,90,249,91,245,138,29,133" href="" />
+			<area shape="poly" coords="40,308,129,307,127,319,242,318,242,377,185,394,174,418,32,418,35,327" href="" />
+		</map>
+	</div>
+</body>
+</html>

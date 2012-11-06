@@ -32,13 +32,13 @@ var ImageMapWeaver = function(targetMap) {
  		
  		// bind window.onresize
  		if(navigator.userAgent.search("iPhone|iPod|iPad") > -1) {
- 			$(window).bind("orientationchange", onresize);	
+ 			$(window).bind("orientationchange", _onresize);
  		} else {
- 			$(window).bind("resize", onresize);	
+ 			$(window).bind("resize", _onresize);
  		} 	 		
  	};
  	
- 	var isImgLoaded = function() {
+ 	var _isImgLoaded = function() {
  		if(targetImg.prop("naturalWidth")) {
  			return true;
  		}
@@ -54,7 +54,7 @@ var ImageMapWeaver = function(targetMap) {
  	var _calcCoords = function(area) {
  		var area = $(area);
  		var coordsArray = area.data("coords").split(",");
- 		
+
  		for(var i = 0; i < coordsArray.length; i++) {
  			if(i % 2 == 0) {
  				coordsArray[i] = coordsArray[i] - (coordsArray[i] - Math.round(coordsArray[i] * currentRatio.width));
@@ -66,7 +66,7 @@ var ImageMapWeaver = function(targetMap) {
  		return coordsArray.join();
  	};
 
-	var onresize = function() {
+	var _onresize = function() {
 		if(self.currentWindowSize != $(window).width()) {
 			self.currentWindowSize = $(window).width();
 			self.apply();
@@ -74,7 +74,7 @@ var ImageMapWeaver = function(targetMap) {
 	};
  	
  	this.apply = function() {
- 		if(!isImgLoaded()) {
+ 		if(!_isImgLoaded()) {
  			targetImg.one("load", self.apply);
  			
  			return false;
@@ -94,11 +94,17 @@ $.fn.imageMapWeaver = function() {
 	if(this.length <= 0) {
 		return null;
 	}
+
+	var maps = [];
+
+	this.each(function(i, v) {
+		v.imageMapWeaver = new ImageMapWeaver(v);
+		v.imageMapWeaver.apply();
+
+		maps.push(v.imageMapWeaver);
+	});
 	
-	this.imageMapWeaver = new ImageMapWeaver(this);
-	this.imageMapWeaver.apply();
-	
-	return this.imageMapWeaver;
+	return this.imageMapWeaver = maps;
 };
 
 })(jQuery);
