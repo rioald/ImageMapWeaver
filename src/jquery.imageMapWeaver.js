@@ -15,7 +15,14 @@ var ImageMapWeaver = function(targetMap) {
 	"use strict";
 	
 	targetMap = $(targetMap).get(0);
-	var targetImg = $("img[usemap='" + targetMap.name + "']");
+	
+	var targetImg = null;
+	if(targetMap.name) {
+		targetImg = $("img[usemap='#" + targetMap.name + "']");
+	} else if(targetMap.id) {
+		targetImg = $("img[usemap='#" + targetMap.id + "']");
+	}
+	
 	var targetArea = $(targetMap).find("area");
  	var currentRatio = {
 		width: 100,
