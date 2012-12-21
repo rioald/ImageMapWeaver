@@ -117,14 +117,6 @@ var ImageMapWeaver = function(targetMap) {
  		targetArea.each(function(i, v) {
  			$(v).attr("coords", _calcCoords(v));
  		});
-		
-		console.log(navigator.userAgent);
-		console.log("naturalWidth: " + targetImg.prop("naturalWidth"));
-		console.log("naturalHeight: " + targetImg.prop("naturalHeight"));
-		console.log("width: " + targetImg.width());
-		console.log("height: " + targetImg.height());
-		
-		$(Object.keys($("img[usemap]").get(0))).each(function() { console.log(this.toString() + ": " +$("img[usemap]").get(0)[this.toString()]); })
  	};
  	
  	_init();
