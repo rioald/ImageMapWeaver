@@ -54,21 +54,46 @@ var ImageMapWeaver = function(targetMap) {
  	};
  	
  	var _calcRatio = function() {
- 		currentRatio.width = targetImg.width() / targetImg.prop("naturalWidth");
+ 		currentRatio.width = targetImg.width() / targetImg.prop("naturalWidth")
+;
  		currentRatio.height = targetImg.height() / targetImg.prop("naturalHeight");
  	};
  	
- 	var _calcCoords = function(area) {
+ 	var _calcCoords = function(area, halfScale) {			
  		var area = $(area);
  		var coordsArray = area.data("coords").split(",");
+		
+		var calcLogic = function(dimension) {
+			if(halfScale) {
+				return coordsArray[i] - (coordsArray[i] - Math.round(coordsArray[i] * dimension / 2));
+			} else {
+				return coordsArray[i] - (coordsArray[i] - Math.round(coordsArray[i] * dimension));
+			}
+		}
 
+		var isCoordsValid = true;
  		for(var i = 0; i < coordsArray.length; i++) {
  			if(i % 2 == 0) {
- 				coordsArray[i] = coordsArray[i] - (coordsArray[i] - Math.round(coordsArray[i] * currentRatio.width));
+ 				coordsArray[i] = calcLogic(currentRatio.width);
+				
+				if((coordsArray[i] > targetImg.width()) && !halfScale) {
+					isCoordsValid = false;
+					break;
+				}
  			} else {
- 				coordsArray[i] = coordsArray[i] - (coordsArray[i] - Math.round(coordsArray[i] * currentRatio.height));
+ 				coordsArray[i] = calcLogic(currentRatio.width);
+
+				if((coordsArray[i] > targetImg.height()) && !halfScale) {
+					isCoordsValid = false;
+					break;
+				}
  			}
  		}
+			
+		if(!isCoordsValid
+) {
+			return _calcCoords(area, true);
+		}
  		
  		return coordsArray.join();
  	};
@@ -92,6 +117,14 @@ var ImageMapWeaver = function(targetMap) {
  		targetArea.each(function(i, v) {
  			$(v).attr("coords", _calcCoords(v));
  		});
+		
+		console.log(navigator.userAgent);
+		console.log("naturalWidth: " + targetImg.prop("naturalWidth"));
+		console.log("naturalHeight: " + targetImg.prop("naturalHeight"));
+		console.log("width: " + targetImg.width());
+		console.log("height: " + targetImg.height());
+		
+		$(Object.keys($("img[usemap]").get(0))).each(function() { console.log(this.toString() + ": " +$("img[usemap]").get(0)[this.toString()]); })
  	};
  	
  	_init();
