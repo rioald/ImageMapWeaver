@@ -54,8 +54,7 @@ var ImageMapWeaver = function(targetMap) {
  	};
  	
  	var _calcRatio = function() {
- 		currentRatio.width = targetImg.width() / targetImg.prop("naturalWidth")
-;
+ 		currentRatio.width = targetImg.width() / targetImg.prop("naturalWidth");
  		currentRatio.height = targetImg.height() / targetImg.prop("naturalHeight");
  	};
  	
@@ -90,8 +89,7 @@ var ImageMapWeaver = function(targetMap) {
  			}
  		}
 			
-		if(!isCoordsValid
-) {
+		if(!isCoordsValid) {
 			return _calcCoords(area, true);
 		}
  		
